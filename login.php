@@ -12,7 +12,7 @@
             $usuario = mysqli_fetch_assoc($resultado);
             $_SESSION['usuario_id'] = $usuario['id'];
             $_SESSION['usuario_nome'] = $usuario['nome'];
-            header("Location: produtos/listar.php");
+            header("Location: produtos/receitas.php");
             exit;
         } else {
             $mensagem = "E-mail ou senha inválidos.";
