@@ -1,0 +1,226 @@
+:root {
+    --primary-color: #1f4e79;
+    --primary-hover: #153552;
+    --success-color: #28a745;
+    --success-hover: #218838;
+    --danger-color: #dc3545;
+    --danger-hover: #c82333;
+    --bg-color: #f4f6f9;
+    --card-bg: #ffffff;
+    --text-color: #333333;
+    --border-color: #e0e0e0;
+    --radius: 8px;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+}
+
+body {
+    font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+header nav a {
+    color: white;
+    margin-left: 1rem;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.2s;
+}
+
+header nav a:hover {
+    opacity: 0.8;
+}
+
+main {
+    padding: 2rem 2rem 2rem 2rem;
+    width: 100%;
+    overflow-x: auto;
+}
+
+form {
+    width: 100%;
+    max-width: 360px;
+    background-color: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    margin: 1rem 0 0 0;
+}
+
+form label {
+    display: block;
+    margin-top: 0.8rem;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+form input {
+    width: 100%;
+    padding: 0.6rem 0.8rem;
+    margin-top: 0.3rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+}
+
+form input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+form button {
+    margin-top: 1.2rem;
+    width: 100%;
+    padding: 0.75rem;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+form button:hover {
+    background-color: var(--primary-hover);
+}
+
+.cadastrar {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    padding: 0.6rem 1.2rem;
+    background: var(--success-color);
+    color: white;
+    text-decoration: none;
+    border-radius: 4px;
+    font-weight: 600;
+    transition: background-color 0.2s;
+}
+
+.cadastrar:hover {
+    background-color: var(--success-hover);
+}
+
+table {
+    width: 100%;
+    min-width: 600px;
+    border-collapse: collapse;
+    background-color: var(--card-bg);
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    margin-top: 0.5rem;
+}
+
+table th, table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+table th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: 600;
+}
+
+table tbody tr:hover, table tr:hover {
+    background-color: #f1f5f9;
+}
+
+table td a {
+    text-decoration: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: inline-block;
+    margin-right: 0.25rem;
+    transition: opacity 0.2s;
+}
+
+table td a:hover {
+    opacity: 0.85;
+}
+
+table td a[href*="atualizar"], 
+table td a[href*="editar"] {
+    background-color: var(--success-color);
+    color: white;
+}
+
+table td a[href*="excluir"] {
+    background-color: var(--danger-color);
+    color: white;
+}
+
+.nav-toggle-input,
+.nav-toggle {
+    display: none;
+}
+
+footer {
+    text-align: center;
+    padding: 1.5rem;
+    color: #777;
+    font-size: 0.9rem;
+    margin-top: 2rem;
+}
+
+
+@media (max-width: 600px) {
+    header nav a {
+        display: block;
+        margin: 5px 0;
+    }
+
+    table, thead, tbody, th, td, tr {
+        font-size: 14px;
+    }
+}
+
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        gap: 1rem;
+        padding: 1rem;
+    }
+
+    header nav a {
+        margin: 0 0.5rem;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    form {
+        max-width: 100%;
+    }
+}
