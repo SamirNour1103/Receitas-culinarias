@@ -3,32 +3,41 @@ require __DIR__ . '/verifica_login.php';
 require __DIR__ . '/../conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
+    $id = (int) $_POST['id'];
 
-    $sql = "DELETE FROM produtos WHERE id = '$id'";
-    mysqli_query($conexao, $sql);
-    $_SESSION['mensagem'] = "Produto excluído com sucesso!";
-    header('Location: listar.php');
+    $stmt = mysqli_prepare($conexao, "DELETE FROM receitas WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+
+    $_SESSION['mensagem'] = "Receita excluída com sucesso!";
+    header('Location: receitas.php');
     exit;
 } else {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM produtos WHERE id = '$id'";
-    $resultado = mysqli_query($conexao, $sql);
-    $produto = mysqli_fetch_assoc($resultado);
+    $id = (int) ($_GET['id'] ?? 0);
+    $stmt = mysqli_prepare($conexao, "SELECT id, nome FROM receitas WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    $receita = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+
+    if (!$receita) {
+        header('Location: receitas.php');
+        exit;
+    }
 }
 ?>
 
 <?php require __DIR__ . '/../cabecalho.php'; ?>
 
 <main>
-    <h2>Excluir Produto</h2>
-    <p>Tem certeza que deseja excluir o produto
-       <strong><?php echo $produto['nome']; ?></strong>?</p>
+    <h2>Excluir Receita</h2>
+    <p>Tem certeza que deseja excluir a receita
+        <strong><?php echo htmlspecialchars($receita['nome']); ?></strong>?
+    </p>
 
     <form action="excluir.php" method="POST">
-        <input type="hidden" name="id" value="<?php echo $produto['id']; ?>">
-        <button type="submit">Sim, excluir</button>
-        <a href="listar.php">Cancelar</a>
+        <input type="hidden" name="id" value="<?php echo $receita['id']; ?>">
+        <button type="submit" class="perigo">Sim, excluir</button>
+        <a class="btn-sec" href="receitas.php">Cancelar</a>
     </form>
 </main>
 
