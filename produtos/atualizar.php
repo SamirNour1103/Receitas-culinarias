@@ -3,49 +3,54 @@ require __DIR__ . '/verifica_login.php';
 require __DIR__ . '/../conexao.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'];
-    $nome = $_POST['nome'];
-    $descricao = $_POST['descricao'];
-    $preco = $_POST['preco'];
-    $quantidade = $_POST['quantidade'];
+    $id = (int) $_POST['id'];
+    $nome = trim($_POST['nome']);
+    $ingredientes = trim($_POST['ingredientes']);
+    $modo_preparo = trim($_POST['modo_preparo']);
+    $quantidade = (int) $_POST['quantidade'];
 
-    $sql = "UPDATE produtos SET
-            nome = '$nome',
-            descricao = '$descricao',
-            preco = '$preco',
-            quantidade = '$quantidade'
-            WHERE id = '$id'";
+    $stmt = mysqli_prepare(
+        $conexao,
+        "UPDATE receitas SET nome = ?, ingredientes = ?, modo_preparo = ?, quantidade = ? WHERE id = ?"
+    );
+    mysqli_stmt_bind_param($stmt, "sssii", $nome, $ingredientes, $modo_preparo, $quantidade, $id);
+    mysqli_stmt_execute($stmt);
 
-    mysqli_query($conexao, $sql);
-    $_SESSION['mensagem'] = "Produto atualizado com sucesso!";
-    header('Location: listar.php');
+    $_SESSION['mensagem'] = "Receita atualizada com sucesso!";
+    header('Location: receitas.php');
     exit;
 } else {
-    $id = $_GET['id'];
-    $sql = "SELECT * FROM produtos WHERE id = '$id'";
-    $resultado = mysqli_query($conexao, $sql);
-    $produto = mysqli_fetch_assoc($resultado);
+    $id = (int) ($_GET['id'] ?? 0);
+    $stmt = mysqli_prepare($conexao, "SELECT * FROM receitas WHERE id = ?");
+    mysqli_stmt_bind_param($stmt, "i", $id);
+    mysqli_stmt_execute($stmt);
+    $receita = mysqli_fetch_assoc(mysqli_stmt_get_result($stmt));
+
+    if (!$receita) {
+        header('Location: receitas.php');
+        exit;
+    }
 }
 ?>
 
 <?php require __DIR__ . '/../cabecalho.php'; ?>
 
 <main>
-    <h2>Atualizar Produto</h2>
+    <h2>Atualizar Receita</h2>
     <form action="atualizar.php" method="POST">
-        <input type="hidden" name="id" value="<?php echo $produto['id']; ?>">
+        <input type="hidden" name="id" value="<?php echo $receita['id']; ?>">
 
         <label>Nome:</label>
-        <input type="text" name="nome" value="<?php echo $produto['nome']; ?>"><br>
+        <input type="text" name="nome" value="<?php echo htmlspecialchars($receita['nome']); ?>">
 
-        <label>Descrição:</label>
-        <input type="text" name="descricao" value="<?php echo $produto['descricao']; ?>"><br>
+        <label>Ingredientes:</label>
+        <input type="text" name="ingredientes" value="<?php echo htmlspecialchars($receita['ingredientes']); ?>">
 
-        <label>Preço:</label>
-        <input type="text" name="preco" value="<?php echo $produto['preco']; ?>"><br>
+        <label>Modo de preparo:</label>
+        <textarea name="modo_preparo" rows="6"><?php echo htmlspecialchars($receita['modo_preparo']); ?></textarea>
 
-        <label>Quantidade:</label>
-        <input type="text" name="quantidade" value="<?php echo $produto['quantidade']; ?>"><br>
+        <label>Porções:</label>
+        <input type="number" name="quantidade" min="1" value="<?php echo (int) $receita['quantidade']; ?>">
 
         <button type="submit">Salvar alterações</button>
     </form>

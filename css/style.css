@@ -18,7 +18,7 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 10px 5%;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
   position: relative;
   z-index: 10;
 }
@@ -58,14 +58,15 @@ body {
   transition: background-color 0.2s;
 }
 
-.nav a.active, .nav a:hover {
-  background-color: rgba(0,0,0,0.15);
+.nav a.active,
+.nav a:hover {
+  background-color: rgba(0, 0, 0, 0.15);
 }
 
 /* HERO & BANNER */
 .hero {
   background: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-              url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+    url('https://images.unsplash.com/photo-1556910103-1c02745aae4d?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
   height: 180px;
   display: flex;
   align-items: center;
@@ -80,7 +81,7 @@ body {
   align-items: center;
   padding: 10px 18px;
   border-radius: 25px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .search-bar i {
@@ -111,13 +112,13 @@ body {
   background: #ffffff;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 3px 10px rgba(0,0,0,0.06);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.06);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
 .card img {
@@ -171,7 +172,7 @@ body {
   bottom: 0;
   left: 0;
   right: 0;
-  background: linear-gradient(transparent, rgba(0,0,0,0.85));
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.85));
   color: #fff;
   padding: 20px 15px 15px;
 }
@@ -349,4 +350,742 @@ body {
   .recipes-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+}
+
+/* =====================================================
+   AJUSTES E PÁGINAS INTERNAS (login, receitas, forms)
+   ===================================================== */
+
+:root {
+  --laranja: #d85d26;
+  --laranja-escuro: #bf4d1b;
+  --creme: #fbeee6;
+  --texto: #2b1f1d;
+  --cinza: #777;
+  --borda: #e8e1dc;
+  --verde: #2e7d4f;
+  --vermelho: #b3261e;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+  color: var(--texto);
+}
+
+main {
+  width: calc(100% - 30px);
+  max-width: 900px;
+  margin: -30px auto 40px;
+  padding: 30px 32px;
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.08);
+  position: relative;
+  z-index: 5;
+  flex: 1;
+}
+
+main h2 {
+  font-size: 1.5rem;
+  margin-bottom: 18px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--creme);
+}
+
+main p {
+  margin-bottom: 12px;
+}
+
+.centro {
+  text-align: center;
+}
+
+.search-bar h1 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.nav {
+  flex-wrap: wrap;
+}
+
+.nav a:focus-visible,
+button:focus-visible,
+.btn:focus-visible {
+  outline: 3px solid #ffd2bd;
+  outline-offset: 2px;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  max-width: 520px;
+}
+
+main:has(h2.centro) form {
+  margin: 0 auto;
+}
+
+label {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="number"],
+textarea {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border: 1.5px solid var(--borda);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--texto);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+textarea {
+  resize: vertical;
+}
+
+input:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--laranja);
+  box-shadow: 0 0 0 3px rgba(216, 93, 38, 0.18);
+}
+
+button,
+.btn,
+.btn-sec {
+  display: inline-block;
+  padding: 10px 22px;
+  margin-top: 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: var(--laranja);
+  color: #fff;
+  transition: background-color 0.2s;
+}
+
+button:hover,
+.btn:hover {
+  background: var(--laranja-escuro);
+}
+
+.btn-sec {
+  background: transparent;
+  color: var(--texto);
+  border: 1.5px solid var(--borda);
+  margin-left: 8px;
+}
+
+.btn-sec:hover {
+  background: var(--creme);
+}
+
+button.perigo {
+  background: var(--vermelho);
+}
+
+button.perigo:hover {
+  background: #8f1d17;
+}
+
+.alerta {
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.alerta.sucesso {
+  background: #e6f4ec;
+  color: var(--verde);
+  border-left: 4px solid var(--verde);
+}
+
+.alerta.erro {
+  background: #fdeceb;
+  color: var(--vermelho);
+  border-left: 4px solid var(--vermelho);
+}
+
+.tabela-wrap {
+  overflow-x: auto;
+  margin-top: 10px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+th {
+  text-align: left;
+  padding: 10px 12px;
+  background: var(--creme);
+  font-weight: 600;
+}
+
+td {
+  padding: 12px;
+  border-bottom: 1px solid var(--borda);
+  vertical-align: top;
+}
+
+tbody tr:hover {
+  background: #fffaf7;
+}
+
+td.acoes {
+  white-space: nowrap;
+}
+
+td.acoes a {
+  color: var(--laranja);
+  font-weight: 600;
+  text-decoration: none;
+  margin-right: 12px;
+}
+
+td.acoes a:hover {
+  text-decoration: underline;
+}
+
+td.acoes a.perigo {
+  color: var(--vermelho);
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 0.8rem;
+  color: var(--cinza);
+  background: #fff;
+  border-top: 1px solid var(--borda);
+}
+
+@media (max-width: 600px) {
+  main {
+    margin: -20px auto 30px;
+    padding: 22px 18px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+
+/* =====================================================
+   AVALIAÇÕES
+   ===================================================== */
+select {
+  width: 100%;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  border: 1.5px solid var(--borda);
+  border-radius: 8px;
+  background: #fff;
+  color: var(--texto);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--laranja);
+  box-shadow: 0 0 0 3px rgba(216, 93, 38, 0.18);
+}
+
+.form-avaliacao {
+  max-width: 100%;
+  padding: 20px 22px 24px;
+  margin-bottom: 28px;
+  background: #fffaf7;
+  border: 1px solid var(--creme);
+  border-radius: 12px;
+}
+
+.form-avaliacao h3 {
+  font-size: 1.05rem;
+  margin-bottom: 4px;
+}
+
+.subtitulo {
+  font-size: 1.15rem;
+  margin: 8px 0 14px;
+}
+
+.link-limpar {
+  margin-left: 10px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--laranja);
+}
+
+.alerta.aviso {
+  background: var(--creme);
+  color: var(--texto);
+  border-left: 4px solid var(--laranja);
+}
+
+.alerta a {
+  color: var(--laranja-escuro);
+  font-weight: 600;
+}
+
+.avaliacao {
+  padding: 14px 16px;
+  margin-bottom: 12px;
+  border: 1px solid var(--borda);
+  border-radius: 10px;
+}
+
+.avaliacao-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 6px;
+}
+
+.avaliacao p {
+  margin-bottom: 8px;
+}
+
+.avaliacao small {
+  color: var(--cinza);
+}
+
+.estrelas {
+  color: #f2a20c;
+  letter-spacing: 1px;
+  white-space: nowrap;
+}
+
+
+/* Avaliações separadas por receita */
+.grupo-receita {
+  margin-bottom: 22px;
+  padding: 16px 18px 6px;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+}
+
+.grupo-receita.destaque {
+  border-color: var(--laranja);
+  background: #fffaf7;
+}
+
+.grupo-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--creme);
+}
+
+.grupo-topo h4 {
+  font-size: 1.05rem;
+}
+
+.media {
+  font-weight: 600;
+}
+
+.media small {
+  color: var(--cinza);
+  font-weight: 400;
+}
+
+.vazio {
+  color: var(--cinza);
+  font-size: 0.9rem;
+}
+
+.grupo-receita .avaliacao {
+  background: #fff;
+}
+
+
+/* =====================================================
+   LISTA DE RECEITAS EM CARTÕES (clicáveis, com foto)
+   ===================================================== */
+.receitas-lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.receita-card {
+  position: relative;
+  /* base para o link que cobre o cartão */
+  display: flex;
+  flex-direction: column;
+  background: #fff;
+  border: 1px solid var(--borda);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, border-color 0.2s;
+}
+
+.receita-card:hover,
+.receita-card:focus-within {
+  border-color: var(--laranja);
+  box-shadow: 0 6px 18px rgba(216, 93, 38, 0.15);
+}
+
+.receita-card-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  display: block;
+}
+
+.sem-imagem {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--creme);
+  color: var(--laranja);
+  font-size: 2.2rem;
+}
+
+.receita-card-corpo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 14px;
+  flex: 1;
+}
+
+.receita-card h3 {
+  font-size: 1rem;
+  line-height: 1.3;
+}
+
+/* O link do título se estende por todo o cartão: o cartão inteiro vira clicável */
+.link-cartao {
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.link-cartao::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.link-cartao:focus-visible {
+  outline: none;
+}
+
+.receita-card:has(.link-cartao:focus-visible) {
+  outline: 3px solid #ffd2bd;
+}
+
+.resumo {
+  font-size: 0.82rem;
+  color: var(--cinza);
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.receita-card-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  flex-wrap: wrap;
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.receita-card-meta.grande {
+  justify-content: flex-start;
+  gap: 18px;
+  font-size: 0.95rem;
+  margin-bottom: 8px;
+}
+
+.mudo {
+  color: var(--cinza);
+  font-weight: 400;
+}
+
+/* Ações ficam acima do link que cobre o cartão */
+.acoes-card {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  gap: 14px;
+  margin-top: auto;
+  padding-top: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.acoes-card a {
+  color: var(--laranja);
+  text-decoration: none;
+}
+
+.acoes-card a:hover {
+  text-decoration: underline;
+}
+
+.acoes-card a.perigo {
+  color: var(--vermelho);
+}
+
+/* =====================================================
+   PÁGINA DA RECEITA
+   ===================================================== */
+.voltar {
+  color: var(--laranja);
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.voltar:hover {
+  text-decoration: underline;
+}
+
+.receita-capa {
+  width: 100%;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 18px;
+  display: block;
+}
+
+.receita-capa.sem-imagem {
+  height: 160px;
+  font-size: 3rem;
+}
+
+.texto-receita {
+  white-space: pre-line;
+  max-width: 70ch;
+}
+
+.receita-miniatura {
+  width: 160px;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin: 4px 0;
+}
+
+.receita-miniatura.sem-imagem {
+  font-size: 1.6rem;
+}
+
+input[type="file"] {
+  font-size: 0.9rem;
+  padding: 8px 0;
+}
+
+.dica {
+  color: var(--cinza);
+  font-size: 0.78rem;
+}
+
+label.check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.voltar-bloco {
+  margin-bottom: 10px;
+}
+
+.grupo-topo h4 a {
+  color: var(--texto);
+  text-decoration: none;
+}
+
+.grupo-topo h4 a:hover {
+  color: var(--laranja);
+  text-decoration: underline;
+}
+
+/* =====================================================
+   AVALIAÇÕES CLICÁVEIS + MODAL
+   ===================================================== */
+.avaliacao.clicavel {
+  cursor: pointer;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.avaliacao.clicavel:hover,
+.avaliacao.clicavel:focus-visible {
+  border-color: var(--laranja);
+  box-shadow: 0 3px 12px rgba(216, 93, 38, 0.15);
+  outline: none;
+}
+
+.avaliacao-texto {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.modal {
+  width: min(720px, 94vw);
+  max-height: 90vh;
+  padding: 0;
+  border: none;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  color: var(--texto);
+}
+
+.modal::backdrop {
+  background: rgba(43, 31, 29, 0.65);
+}
+
+.modal-corpo {
+  position: relative;
+  padding: 36px 34px 30px;
+}
+
+.modal-corpo h3 {
+  font-size: 1.4rem;
+  margin-bottom: 6px;
+  padding-right: 36px;
+}
+
+.modal-estrelas {
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+}
+
+.modal-texto {
+  white-space: pre-wrap;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin-bottom: 14px;
+}
+
+.modal-corpo small {
+  display: block;
+  color: var(--cinza);
+  margin-bottom: 8px;
+}
+
+.modal-fechar {
+  position: absolute;
+  top: 10px;
+  right: 12px;
+  width: 38px;
+  height: 38px;
+  margin: 0;
+  padding: 0;
+  font-size: 1.8rem;
+  line-height: 1;
+  background: transparent;
+  color: var(--texto);
+  border-radius: 50%;
+}
+
+.modal-fechar:hover {
+  background: var(--creme);
+}
+
+@media (max-width: 600px) {
+  .receita-capa {
+    height: 210px;
+  }
+
+  /* No celular a avaliação ocupa a tela inteira */
+  .modal {
+    width: 100vw;
+    max-width: 100vw;
+    height: 100vh;
+    max-height: 100vh;
+    border-radius: 0;
+  }
+
+  .modal-corpo {
+    padding: 56px 22px 28px;
+  }
+}
+
+
+/* Página única da receita */
+.subtitulo.secao {
+  margin-top: 34px;
+  scroll-margin-top: 16px;
+}
+
+.btn-sec.sem-margem {
+  margin-left: 0;
+}
+
+
+/* Formulário de nova receita dentro da lista */
+.nova-receita {
+  margin-bottom: 26px;
+  border: 1px solid var(--creme);
+  border-radius: 12px;
+  background: #fffaf7;
+}
+
+.nova-receita summary {
+  padding: 14px 20px;
+  font-weight: 600;
+  color: var(--laranja-escuro);
+  cursor: pointer;
+  list-style: none;
+}
+
+.nova-receita summary::-webkit-details-marker {
+  display: none;
+}
+
+.nova-receita summary:hover {
+  color: var(--laranja);
+}
+
+.nova-receita[open] summary {
+  border-bottom: 1px solid var(--creme);
+}
+
+.nova-receita form {
+  max-width: 100%;
+  padding: 6px 20px 22px;
 }

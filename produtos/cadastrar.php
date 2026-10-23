@@ -1,54 +1,71 @@
 <?php
-require __DIR__ . '/verifica_login.php';
+require __DIR__ . '/verifica_login.php';      // só quem está logado entra
 require __DIR__ . '/../conexao.php';
+require_once __DIR__ . '/../funcoes.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = mysqli_real_escape_string($conexao, trim($_POST['nome']));
-    $descricao = mysqli_real_escape_string($conexao, trim($_POST['descricao']));
-    $preco = trim($_POST['preco']);
-    $quantidade = trim($_POST['quantidade']);
+    $nome = trim($_POST['nome'] ?? '');
+    $ingredientes = trim($_POST['ingredientes'] ?? '');
+    $modo_preparo = trim($_POST['modo_preparo'] ?? '');
+    $quantidade = trim($_POST['quantidade'] ?? '');
 
-    if ($nome == "" || $preco == "" || $quantidade == "") {
+    if ($nome == "" || $ingredientes == "" || $modo_preparo == "" || $quantidade == "") {
         $mensagem = "Preencha todos os campos obrigatórios.";
     } else {
-        $sql = "INSERT INTO produtos (nome, descricao, preco, quantidade)
-                VALUES ('$nome', '$descricao', '$preco', '$quantidade')";
+        $imagem = salvar_imagem($_FILES['imagem'] ?? null, $erro_imagem);
 
-        if (mysqli_query($conexao, $sql)) {
-            $_SESSION['mensagem'] = "Produto cadastrado com sucesso!";
-            header('Location: listar.php');
-            exit;
+        if ($erro_imagem) {
+            $mensagem = $erro_imagem;
         } else {
-            $mensagem = "Erro ao cadastrar produto: " . mysqli_error($conexao);
+            $stmt = mysqli_prepare(
+                $conexao,
+                "INSERT INTO receitas (nome, ingredientes, modo_preparo, quantidade, imagem) VALUES (?, ?, ?, ?, ?)"
+            );
+            mysqli_stmt_bind_param($stmt, "sssis", $nome, $ingredientes, $modo_preparo, $quantidade, $imagem);
+
+            if (mysqli_stmt_execute($stmt)) {
+                $_SESSION['mensagem'] = "Receita cadastrada com sucesso!";
+                header('Location: receitas.php');
+                exit;
+            } else {
+                apagar_imagem($imagem);   // não deixa arquivo órfão
+                $mensagem = "Erro ao cadastrar receita: " . mysqli_error($conexao);
+            }
         }
     }
 }
-
 ?>
 
 <?php require __DIR__ . '/../cabecalho.php'; ?>
 
 <main>
-    <h2>Cadastrar Produto</h2>
+    <p><a class="voltar" href="receitas.php">&larr; Todas as receitas</a></p>
+    <h2>Cadastrar Receita</h2>
 
     <?php if (isset($mensagem)) { ?>
-        <p><?php echo $mensagem; ?></p>
+        <p class="alerta erro"><?php echo htmlspecialchars($mensagem); ?></p>
     <?php } ?>
 
-    <form action="cadastrar.php" method="POST">
+    <!-- enctype multipart é obrigatório para enviar arquivos -->
+    <form action="cadastrar.php" method="POST" enctype="multipart/form-data">
         <label>Nome:</label>
-        <input type="text" name="nome"><br>
+        <input type="text" name="nome" value="<?php echo htmlspecialchars($_POST['nome'] ?? ''); ?>">
 
-        <label>Descrição:</label>
-        <input type="text" name="descricao"><br>
+        <label>Ingredientes:</label>
+        <input type="text" name="ingredientes" value="<?php echo htmlspecialchars($_POST['ingredientes'] ?? ''); ?>">
 
-        <label>Preço:</label>
-        <input type="text" name="preco"><br>
+        <label>Modo de preparo:</label>
+        <textarea name="modo_preparo" rows="6"><?php echo htmlspecialchars($_POST['modo_preparo'] ?? ''); ?></textarea>
 
-        <label>Quantidade:</label>
-        <input type="text" name="quantidade"><br>
+        <label>Porções:</label>
+        <input type="number" name="quantidade" min="1"
+            value="<?php echo htmlspecialchars($_POST['quantidade'] ?? ''); ?>">
 
-        <button type="submit">Salvar</button>
+        <label>Foto da receita (opcional):</label>
+        <input type="file" name="imagem" accept="image/jpeg,image/png,image/webp">
+        <small class="dica">JPG, PNG ou WEBP, até 2 MB.</small>
+
+        <button type="submit">Salvar receita</button>
     </form>
 </main>
 
