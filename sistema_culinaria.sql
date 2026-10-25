@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 23/10/2026 às 04:31
+-- Tempo de geração: 25/10/2026 às 17:50
 -- Versão do servidor: 10.4.32-MariaDB
 -- Versão do PHP: 8.2.12
 
@@ -47,15 +47,16 @@ CREATE TABLE `receitas` (
   `nome` varchar(255) NOT NULL,
   `ingredientes` varchar(255) NOT NULL,
   `modo_preparo` text NOT NULL,
-  `quantidade` int(11) NOT NULL
+  `quantidade` int(11) NOT NULL,
+  `imagem` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Despejando dados para a tabela `receitas`
 --
 
-INSERT INTO `receitas` (`id`, `nome`, `ingredientes`, `modo_preparo`, `quantidade`) VALUES
-(1, 'Bolo de cenoura', 'Massa: 3 cenouras médias, 3 ovos, 2 xícaras de açúcar, 1 de óleo, 2 de farinha, 1 colher de fermento e sal a gosto.  Cobertura: 3 colheres de açúcar, 2 de chocolate em pó, 1 de manteiga e ½ xícara de leite.', 'Modo de Preparo\r\n\r\n\r\n1. Fazendo a Massa\r\n\r\n1. Em uma tigela ou liquidificador, bata os ovos com o açúcar e o óleo até obter uma mistura homogênea e levemente clara.\r\n2. Adicione o chocolate em pó (peneirado, se preferir) e mexa bem.\r\n3. Acrescente a farinha de trigo aos poucos, alternando com o leite, misturando com um fouet ou colher até a massa ficar lisa.\r\n4. Por último, junte o fermento em pó e mexa delicadamente.\r\n5. Despeje a massa em uma forma untada e enfarinhada.\r\n6. Leve ao forno pré-aquecido a 180°C por cerca de 35 a 40 minutos (faça o teste do palito).\r\n\r\n2. Preparando a Calda\r\n\r\n1. Em uma panela pequena, coloque o leite, o chocolate em pó, o açúcar e a manteiga.\r\n2. Leve ao fogo médio, mexendo sempre até levantar fervura e engrossar levemente (cerca de 2 a 3 minutos).\r\n\r\n3. Montagem\r\n\r\n1. Com o bolo ainda quente (ou morno), faça vários furos na superfície usando um garfo ou palito.\r\n2. Despeje a calda quente por cima do bolo, espalhando bem para que penetre nos furos.', 1);
+INSERT INTO `receitas` (`id`, `nome`, `ingredientes`, `modo_preparo`, `quantidade`, `imagem`) VALUES
+(1, 'Bolo de cenoura', 'Massa: 3 cenouras médias, 3 ovos, 2 xícaras de açúcar, 1 de óleo, 2 de farinha, 1 colher de fermento e sal a gosto.  Cobertura: 3 colheres de açúcar, 2 de chocolate em pó, 1 de manteiga e ½ xícara de leite.', 'Modo de Preparo\r\n\r\n\r\n1. Fazendo a Massa\r\n\r\n1. Em uma tigela ou liquidificador, bata os ovos com o açúcar e o óleo até obter uma mistura homogênea e levemente clara.\r\n2. Adicione o chocolate em pó (peneirado, se preferir) e mexa bem.\r\n3. Acrescente a farinha de trigo aos poucos, alternando com o leite, misturando com um fouet ou colher até a massa ficar lisa.\r\n4. Por último, junte o fermento em pó e mexa delicadamente.\r\n5. Despeje a massa em uma forma untada e enfarinhada.\r\n6. Leve ao forno pré-aquecido a 180°C por cerca de 35 a 40 minutos (faça o teste do palito).\r\n\r\n2. Preparando a Calda\r\n\r\n1. Em uma panela pequena, coloque o leite, o chocolate em pó, o açúcar e a manteiga.\r\n2. Leve ao fogo médio, mexendo sempre até levantar fervura e engrossar levemente (cerca de 2 a 3 minutos).\r\n\r\n3. Montagem\r\n\r\n1. Com o bolo ainda quente (ou morno), faça vários furos na superfície usando um garfo ou palito.\r\n2. Despeje a calda quente por cima do bolo, espalhando bem para que penetre nos furos.', 1, NULL);
 
 -- --------------------------------------------------------
 
