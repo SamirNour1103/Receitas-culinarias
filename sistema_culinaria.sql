@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 25/10/2026 às 17:50
--- Versão do servidor: 10.4.32-MariaDB
--- Versão do PHP: 8.2.12
+-- Tempo de geração: 19-Nov-2026 às 11:30
+-- Versão do servidor: 10.4.22-MariaDB
+-- versão do PHP: 8.1.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,11 +20,13 @@ SET time_zone = "+00:00";
 --
 -- Banco de dados: `sistema_culinaria`
 --
+CREATE DATABASE IF NOT EXISTS `sistema_culinaria` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+USE `sistema_culinaria`;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `avaliacoes`
+-- Estrutura da tabela `avaliacoes`
 --
 
 CREATE TABLE `avaliacoes` (
@@ -34,12 +36,12 @@ CREATE TABLE `avaliacoes` (
   `data` varchar(10) NOT NULL,
   `descricao` text NOT NULL,
   `score` int(5) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `receitas`
+-- Estrutura da tabela `receitas`
 --
 
 CREATE TABLE `receitas` (
@@ -49,10 +51,10 @@ CREATE TABLE `receitas` (
   `modo_preparo` text NOT NULL,
   `quantidade` int(11) NOT NULL,
   `imagem` varchar(255) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Despejando dados para a tabela `receitas`
+-- Extraindo dados da tabela `receitas`
 --
 
 INSERT INTO `receitas` (`id`, `nome`, `ingredientes`, `modo_preparo`, `quantidade`, `imagem`) VALUES
@@ -61,7 +63,7 @@ INSERT INTO `receitas` (`id`, `nome`, `ingredientes`, `modo_preparo`, `quantidad
 -- --------------------------------------------------------
 
 --
--- Estrutura para tabela `usuarios`
+-- Estrutura da tabela `usuarios`
 --
 
 CREATE TABLE `usuarios` (
@@ -69,21 +71,21 @@ CREATE TABLE `usuarios` (
   `nome` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `senha` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Despejando dados para a tabela `usuarios`
+-- Extraindo dados da tabela `usuarios`
 --
 
 INSERT INTO `usuarios` (`id`, `nome`, `email`, `senha`) VALUES
-(1, 'Pedro', 'pedro@email.com', '123456');
+(1, 'Receitas', 'receitas@gmail.com', '123456');
 
 --
 -- Índices para tabelas despejadas
 --
 
 --
--- Índices de tabela `avaliacoes`
+-- Índices para tabela `avaliacoes`
 --
 ALTER TABLE `avaliacoes`
   ADD PRIMARY KEY (`id`),
@@ -91,19 +93,19 @@ ALTER TABLE `avaliacoes`
   ADD KEY `idx_avaliacoes_usuario` (`usuario_id`);
 
 --
--- Índices de tabela `receitas`
+-- Índices para tabela `receitas`
 --
 ALTER TABLE `receitas`
   ADD PRIMARY KEY (`id`);
 
 --
--- Índices de tabela `usuarios`
+-- Índices para tabela `usuarios`
 --
 ALTER TABLE `usuarios`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT para tabelas despejadas
+-- AUTO_INCREMENT de tabelas despejadas
 --
 
 --
@@ -125,11 +127,11 @@ ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
--- Restrições para tabelas despejadas
+-- Restrições para despejos de tabelas
 --
 
 --
--- Restrições para tabelas `avaliacoes`
+-- Limitadores para a tabela `avaliacoes`
 --
 ALTER TABLE `avaliacoes`
   ADD CONSTRAINT `fk_avaliacoes_receita` FOREIGN KEY (`receita_id`) REFERENCES `receitas` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
