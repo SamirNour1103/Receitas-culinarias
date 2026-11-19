@@ -1203,52 +1203,49 @@ select:focus {
 }
 
 
-/* Avaliações separadas por receita */
-.grupo-receita {
-  margin-bottom: 22px;
-  padding: 16px 18px 6px;
-  border: 1px solid var(--borda);
-  border-radius: 12px;
+/* Container principal do livro com perspectiva 3D */
+.livro-aberto {
+    perspective: 2500px;
+    position: relative;
+    overflow: hidden;
+    transform-style: preserve-3d;
 }
 
-.grupo-receita.destaque {
-  border-color: var(--laranja);
-  background: #fffaf7;
+/* Folhas do livro */
+.pagina-parativa {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    transform-style: preserve-3d;
+    transform-origin: left center; /* O eixo de giro é a lombada (esquerda) */
+    transition: transform 0.9s cubic-bezier(0.645, 0.045, 0.355, 1), opacity 0.3s ease;
+    backface-visibility: hidden;
 }
 
-.grupo-topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: baseline;
-  gap: 10px;
-  flex-wrap: wrap;
-  margin-bottom: 12px;
-  padding-bottom: 8px;
-  border-bottom: 2px solid var(--creme);
+/* Páginas que já passaram (giradas para a esquerda) */
+.pagina-parativa.passada {
+    transform: rotateY(-180deg);
+    opacity: 0;
+    pointer-events: none;
 }
 
-.grupo-topo h4 {
-  font-size: 1.05rem;
+/* Páginas futuras (esperando na direita) */
+.pagina-parativa.futura {
+    transform: rotateY(180deg);
+    opacity: 0;
+    pointer-events: none;
 }
 
-.media {
-  font-weight: 600;
+/* Página atual aberta no visor */
+.pagina-parativa.ativa {
+    transform: rotateY(0deg);
+    opacity: 1;
+    pointer-events: auto;
+    z-index: 10;
 }
-
-.media small {
-  color: var(--cinza);
-  font-weight: 400;
-}
-
-.vazio {
-  color: var(--cinza);
-  font-size: 0.9rem;
-}
-
-.grupo-receita .avaliacao {
-  background: #fff;
-}
-
 
 /* =====================================================
    LISTA DE RECEITAS EM CARTÕES (clicáveis, com foto)

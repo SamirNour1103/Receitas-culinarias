@@ -1,67 +1,90 @@
-let parAtual = 0;
+document.addEventListener('DOMContentLoaded', function () {
 
-function atualizarLivro() {
-    const pares = document.querySelectorAll('.pagina-parativa');
-    const totalPares = pares.length - 1;
+    const livro = document.getElementById('livroContainer');
 
-    if (parAtual < 0) parAtual = 0;
-    if (parAtual > totalPares) parAtual = totalPares;
+    if (!livro) return;
 
-    pares.forEach((par) => {
-        const numPar = parseInt(par.getAttribute('data-pagina-par'));
-        
-        // Remove todas as classes de estado
-        par.classList.remove('ativa', 'passada', 'futura');
+    let animacaoFolha = false;
 
-        if (numPar === parAtual) {
-            // Página atual visível
-            par.classList.add('ativa');
-        } else if (numPar < parAtual) {
-            // Páginas que já passaram (ficam dobradas para a esquerda)
-            par.classList.add('passada');
-        } else {
-            // Páginas futuras (esperando dobradas na direita)
-            par.classList.add('futura');
+    const mudarParOriginal = mudarPar;
+    const irParaPaginaOriginal = irParaPagina;
+
+    mudarPar = function (direcao) {
+
+        if (animacaoFolha) return;
+
+        const paginaAtual = document.querySelector(
+            '.pagina-parativa[data-pagina-par="' + parAtual + '"]'
+        );
+
+        const novoPar = parAtual + direcao;
+
+        if (novoPar < 0 || novoPar > maxPar) return;
+
+        const novaPagina = document.querySelector(
+            '.pagina-parativa[data-pagina-par="' + novoPar + '"]'
+        );
+
+        if (!paginaAtual || !novaPagina) {
+            mudarParOriginal(direcao);
+            return;
         }
-    });
-}
 
-function mudarPar(direcao) {
-    parAtual += direcao;
-    atualizarLivro();
-}
+        animacaoFolha = true;
 
-function irParaPagina(numPagina) {
-    parAtual = Math.ceil(numPagina / 2);
-    atualizarLivro();
-}
+        livro.style.perspective = '1500px';
 
-document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const receitaIdParam = urlParams.get('id');
-    
-    // Se veio um ID de receita na URL, calcula o par correspondente
-    if (receitaIdParam && typeof idParaIndiceMap !== 'undefined' && idParaIndiceMap[receitaIdParam] !== undefined) {
-        parAtual = Math.ceil(idParaIndiceMap[receitaIdParam] / 2);
-    }
-    
-    atualizarLivro();
-});
+        paginaAtual.style.transformOrigin = 'center center';
+        paginaAtual.style.transformStyle = 'preserve-3d';
+        paginaAtual.style.backfaceVisibility = 'hidden';
+        paginaAtual.style.transition = 'transform 0.7s ease-in-out';
 
-document.addEventListener('DOMContentLoaded', () => {
-  const mobileMenu = document.getElementById('mobile-menu');
-  const nav = document.querySelector('.nav');
+        if (direcao > 0) {
+            paginaAtual.style.transform = 'rotateY(-90deg)';
+        } else {
+            paginaAtual.style.transform = 'rotateY(90deg)';
+        }
 
-  if (mobileMenu && nav) {
-    mobileMenu.addEventListener('click', () => {
-      nav.classList.toggle('active');
-      
-      // Alterna o ícone entre barras (hambúrguer) e 'X' (fechar)
-      const icon = mobileMenu.querySelector('i');
-      if (icon) {
-        icon.classList.toggle('fa-bars');
-        icon.classList.toggle('fa-xmark');
-      }
-    });
-  }
+        setTimeout(function () {
+
+            mudarParOriginal(direcao);
+
+            const paginaNova = document.querySelector(
+                '.pagina-parativa[data-pagina-par="' + parAtual + '"]'
+            );
+
+            if (paginaNova) {
+                paginaNova.style.transform = 'rotateY(0deg)';
+            }
+
+            paginaAtual.style.transition = 'none';
+            paginaAtual.style.transform = 'rotateY(0deg)';
+
+            setTimeout(function () {
+
+                paginaAtual.style.transition = '';
+                paginaAtual.style.transform = '';
+                paginaAtual.style.transformOrigin = '';
+                paginaAtual.style.transformStyle = '';
+                paginaAtual.style.backfaceVisibility = '';
+
+                if (paginaNova) {
+                    paginaNova.style.transform = '';
+                }
+
+                animacaoFolha = false;
+
+            }, 50);
+
+        }, 700);
+    };
+
+    irParaPagina = function (numPagina) {
+
+        if (animacaoFolha) return;
+
+        irParaPaginaOriginal(numPagina);
+
+    };
+
 });
